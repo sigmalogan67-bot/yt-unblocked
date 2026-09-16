@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unblocked YouTube Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        input {
+            width: 70%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #cc0000; }
+        .video-container {
+            margin-top: 30px;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Alternative YouTube Player</h1>
+    <p>Paste a YouTube video link or Video ID below to watch unblocked.</p>
+    
+    <input type="text" id="videoInput" placeholder="e.g., https://youtube.com or just dQw4w9WgXcQ">
+    <button onclick="loadVideo()">Play</button>
+
+    <div class="video-container">
+        <iframe id="player" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    function extractVideoId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : url;
+    }
+
+    function loadVideo() {
+        const input = document.getElementById('videoInput').value.trim();
+        if (!input) return alert('Please enter a video URL or ID');
+        
+        const videoId = extractVideoId(input);
+        
+        // Uses the nocookie embed domain which is less strictly blocked on some firewalls
+        const embedUrl = `https://youtube-nocookie.com{videoId}`;
+        
+        document.getElementById('player').src = embedUrl;
+    }
+</script>
+
+</body>
+</html>
